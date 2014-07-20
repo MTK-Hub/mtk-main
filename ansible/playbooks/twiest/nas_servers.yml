@@ -1,0 +1,6 @@
+---
+- hosts: nas_servers
+  remote_user: root
+  tasks:
+    - name: "test connection"
+      command: echo wow
