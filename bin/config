@@ -32,7 +32,13 @@ module MTK
 end
 
 if __FILE__ == $0
-  script_dir = File.dirname($0)
+  script_dir = nil
+  if File.symlink?(__FILE__)
+    script_dir = File.dirname(File.readlink(__FILE__))
+  else
+    script_dir = File.dirname(__FILE__)
+  end
+
   ansible_dir = File.expand_path("#{script_dir}/../ansible")
 
   Dir.chdir(ansible_dir) do
