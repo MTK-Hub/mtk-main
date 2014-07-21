@@ -11,6 +11,12 @@
     group=twiest
     groups="{{ mtk_twiest_groups}}"
 
+- name: setup pub key
+  authorized_key: >
+    user=twiest
+    key="{{ item }}"
+  with_items: mtk_twiest_authorized_keys
+
 - name: setup vimrc
   copy: >
     src=vimrc
