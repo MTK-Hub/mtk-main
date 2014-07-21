@@ -18,3 +18,11 @@
     owner=twiest
     group=twiest
     mode=640
+
+- name: setup irbrc
+  copy: >
+    src=irbrc
+    dest=/home/twiest/.irbrc
+    owner=twiest
+    group=twiest
+    mode=640
