@@ -10,3 +10,11 @@
     uid="{{ mtk_twiest_uid }}"
     group=twiest
     groups="{{ mtk_twiest_groups}}"
+
+- name: setup vimrc
+  copy: >
+    src=vimrc
+    dest=/home/twiest/.vimrc
+    owner=twiest
+    group=twiest
+    mode=640
