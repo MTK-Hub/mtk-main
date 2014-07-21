@@ -9,37 +9,30 @@ module MTK
   class AnsibleHelper
     PRIVATE_DIR = "#{ENV['HOME']}/.ansible/private"
 
-    def self.get_private_data()
+    def self.get_private_files()
       FileUtils.mkdir_p(PRIVATE_DIR) unless File.exist?(PRIVATE_DIR)
 
       private_files = Dir.glob(["#{PRIVATE_DIR}/*.yaml", "#{PRIVATE_DIR}/*.yml"]).to_a
 
       if private_files.empty?
+        puts "\nWARNING: missing private data files in [#{PRIVATE_DIR}].\n\n" if retval.empty?
+
         File.open("#{PRIVATE_DIR}/main.yaml", 'w') do |f|
           f.write("---\n")
-          f.write("# private data goes here")
+          f.write("# private data goes here\n")
+          f.write("mtk_example_var_foo: bar\n")
         end
+
+        private_files = Dir.glob(["#{PRIVATE_DIR}/*.yaml", "#{PRIVATE_DIR}/*.yml"]).to_a
       end
 
-      retval = {}
-      private_files.each do |p|
-        d = YAML.load_file(p)
-
-        # Nothing in the yaml file
-        next if d.nil?
-
-        retval.merge!(d)
-      end
-
-      puts "\nWARNING: private data is empty in [#{PRIVATE_DIR}].\n\n" if retval.empty?
-
-      return retval
+      return private_files
     end
 
     def self.run_playbook(playbook)
-      private_data = get_private_data()
+      private_files = get_private_files()
 
-      cmd = "time -p ansible-playbook --diff -v #{playbook} --extra-vars '#{private_data.to_json}'"
+      cmd = "time -p ansible-playbook --diff -v #{playbook} -e @#{private_files.join(' -e @')}"
       system(cmd)
     end
   end
