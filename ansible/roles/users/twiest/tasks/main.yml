@@ -17,6 +17,14 @@
     key="{{ item }}"
   with_items: mtk_twiest_authorized_keys
 
+- name: setup bashrc
+  copy: >
+    src=bashrc
+    dest=/home/twiest/.bashrc
+    owner=twiest
+    group=twiest
+    mode=640
+
 - name: setup vimrc
   copy: >
     src=vimrc

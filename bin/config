@@ -39,7 +39,7 @@ module MTK
     def self.run_playbook(playbook)
       private_data = get_private_data()
 
-      cmd = "time -p ansible-playbook -v #{playbook} --extra-vars '#{private_data.to_json}'"
+      cmd = "time -p ansible-playbook --diff -v #{playbook} --extra-vars '#{private_data.to_json}'"
       system(cmd)
     end
   end
