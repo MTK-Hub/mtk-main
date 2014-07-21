@@ -7,6 +7,7 @@
 - name: create twiest user
   user: >
     name=twiest
+    comment="Thomas Wiest"
     uid="{{ mtk_twiest_uid }}"
     group=twiest
     groups="{{ mtk_twiest_groups}}"
@@ -37,6 +38,14 @@
   copy: >
     src=irbrc
     dest=/home/twiest/.irbrc
+    owner=twiest
+    group=twiest
+    mode=640
+
+- name: setup gitconfig
+  template: >
+    src=gitconfig
+    dest=/home/twiest/.gitconfig
     owner=twiest
     group=twiest
     mode=640

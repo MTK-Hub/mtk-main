@@ -1,0 +1,14 @@
+[user]
+  name = Thomas Wiest
+  email = {{ mtk_twiest_email }}
+[alias]
+  co = checkout
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  grep = auto
+[mergetool]
+  keepBackup = false
+[push]
+  default = upstream
