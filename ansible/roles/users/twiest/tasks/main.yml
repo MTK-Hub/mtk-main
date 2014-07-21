@@ -1,0 +1,12 @@
+---
+- name: create twiest group
+  group: >
+    name=twiest
+    gid="{{ mtk_twiest_gid }}"
+
+- name: create twiest user
+  user: >
+    name=twiest
+    uid="{{ mtk_twiest_uid }}"
+    group=twiest
+    groups="{{ mtk_twiest_groups}}"

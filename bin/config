@@ -1,8 +1,49 @@
 #!/usr/bin/env ruby
 
 require 'thor'
+require 'yaml'
+require 'json'
+require 'fileutils'
 
 module MTK
+  class AnsibleHelper
+    PRIVATE_DIR = "#{ENV['HOME']}/.ansible/private"
+
+    def self.get_private_data()
+      FileUtils.mkdir_p(PRIVATE_DIR) unless File.exist?(PRIVATE_DIR)
+
+      private_files = Dir.glob(["#{PRIVATE_DIR}/*.yaml", "#{PRIVATE_DIR}/*.yml"]).to_a
+
+      if private_files.empty?
+        File.open("#{PRIVATE_DIR}/main.yaml", 'w') do |f|
+          f.write("---\n")
+          f.write("# private data goes here")
+        end
+      end
+
+      retval = {}
+      private_files.each do |p|
+        d = YAML.load_file(p)
+
+        # Nothing in the yaml file
+        next if d.nil?
+
+        retval.merge!(d)
+      end
+
+      puts "\nWARNING: private data is empty in [#{PRIVATE_DIR}].\n\n" if retval.empty?
+
+      return retval
+    end
+
+    def self.run_playbook(playbook)
+      private_data = get_private_data()
+
+      cmd = "time -p ansible-playbook -v #{playbook} --extra-vars '#{private_data.to_json}'"
+      system(cmd)
+    end
+  end
+
   class Config < Thor
 
     desc "list", "list available configs"
@@ -22,11 +63,10 @@ module MTK
 
     desc "apply CONFIG", "Applies CONFIG"
     def apply(config)
-      full_path = "#{Dir.pwd}/playbooks/#{config}"
-      abort "\nError: Couldn't find config [#{full_path}]\n\n" unless File.exist?(full_path)
+      playbook = "#{Dir.pwd}/playbooks/#{config}"
+      abort "\nError: Couldn't find config [#{playbook}]\n\n" unless File.exist?(playbook)
 
-      cmd = "time -p ansible-playbook -v #{full_path}"
-      system(cmd)
+      AnsibleHelper.run_playbook(playbook)
     end
   end
 end

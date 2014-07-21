@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: Thomas Wiest
+  description: Adds the twiest user and group
+  company: MTK-Hub
+  license: MIT
+  min_ansible_version: 1.2
+  categories:
+  - system
+dependencies: []
