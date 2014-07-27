@@ -2,21 +2,21 @@
 - name: create twiest group
   group: >
     name=twiest
-    gid="{{ mtk_twiest_gid }}"
+    gid="{{ mtk_users.twiest.gid }}"
 
 - name: create twiest user
   user: >
     name=twiest
     comment="Thomas Wiest"
-    uid="{{ mtk_twiest_uid }}"
+    uid="{{ mtk_users.twiest.uid }}"
     group=twiest
-    groups="{{ mtk_twiest_groups}}"
+    groups="{{ mtk_users.twiest.groups}}"
 
 - name: setup pub key
   authorized_key: >
     user=twiest
     key="{{ item }}"
-  with_items: mtk_twiest_authorized_keys
+  with_items: mtk_users.twiest.authorized_keys
 
 - name: setup bashrc
   copy: >

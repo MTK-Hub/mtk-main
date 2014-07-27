@@ -1,6 +1,6 @@
 [user]
   name = Thomas Wiest
-  email = {{ mtk_twiest_email }}
+  email = {{ mtk_users.twiest.email }}
 [alias]
   co = checkout
 [color]

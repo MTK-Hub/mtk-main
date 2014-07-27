@@ -11,11 +11,12 @@ None
 Role Variables
 --------------
 
-mtk_twiest_uid: The uid for the twiest user
-mtk_twiest_gid: The gid for the twiest group
-mtk_twiest_groups: a comma separated list of groups to which the twiest user should belong
-mtk_twiest_authorized_keys: An array of public keys to add to twiest's authorized_keys file
-mtk_twiest_email: e-mail address for the twiest user
+mtk_users: Contains all user account info
+mtk_users.twiest.uid: The uid for the twiest user
+mtk_users.twiest.gid: The gid for the twiest group
+mtk_users.twiest.groups: a comma separated list of groups to which the twiest user should belong
+mtk_users.twiest.authorized_keys: An array of public keys to add to twiest's authorized_keys file
+mtk_users.twiest.email: e-mail address for the twiest user
 
 
 Dependencies
@@ -28,7 +29,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: users/twiest, mtk_twiest_uid: 1000, mtk_twiest_gid: 1000, mtk_twiest_groups: wheel,audio, mtk_twiest_authorized_keys: ['key1','key2'], mtk_twiest_email: user@mail.org }
+         - { role: users/twiest, mtk_users: { twiest: { uid: 1000, gid: 1000, groups: 'wheel,audio', authorized_keys: ['key1','key2'], email: user@mail.org } } }
 
 License
 -------
