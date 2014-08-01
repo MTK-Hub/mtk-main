@@ -1,0 +1,7 @@
+---
+- name: install base packages
+  yum: name={{ item }}
+  with_items:
+  - ruby
+  - git
+  - vim-enhanced

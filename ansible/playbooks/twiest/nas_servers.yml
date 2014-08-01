@@ -2,5 +2,6 @@
 - hosts: nas_servers
   remote_user: root
   roles:
+    - role: ../../../roles/server/base
     - role: ../../../roles/server/container
     - role: ../../../roles/user/twiest
