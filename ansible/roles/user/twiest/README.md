@@ -29,7 +29,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: users/twiest, mtk_users: { twiest: { uid: 1000, gid: 1000, groups: 'wheel,audio', authorized_keys: ['key1','key2'], email: user@mail.org } } }
+         - { role: user/twiest, mtk_users: { twiest: { uid: 1000, gid: 1000, groups: 'wheel,audio', authorized_keys: ['key1','key2'], email: user@mail.org } } }
 
 License
 -------
